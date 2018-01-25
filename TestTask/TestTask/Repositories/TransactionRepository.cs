@@ -21,5 +21,10 @@ namespace TestTask.Repositories
             _transactionContext.Transactions.Add(transaction);
             _transactionContext.SaveChanges();
         }
+
+        public List<Transaction> GetAllTransactions()
+        {
+            return _transactionContext.Transactions.Select(x => x).ToList();
+        }
     }
 }

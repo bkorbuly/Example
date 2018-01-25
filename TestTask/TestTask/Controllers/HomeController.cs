@@ -22,6 +22,7 @@ namespace TestTask.Controllers
         public IActionResult Index()
         {
             _transactionService.ReadFile();
+            _transactionService.MatchTransactions();
             return View();
         }
     }
