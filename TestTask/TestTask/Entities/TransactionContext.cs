@@ -13,5 +13,6 @@ namespace TestTask.Entities
         {
         }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<NewTransaction> NewTransactions { get; set; }
     }
 }

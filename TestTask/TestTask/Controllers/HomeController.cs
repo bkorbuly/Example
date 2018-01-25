@@ -21,9 +21,11 @@ namespace TestTask.Controllers
         [Route("")]
         public IActionResult Index()
         {
+            _transactionService.Delete();
             _transactionService.ReadFile();
             _transactionService.MatchTransactions();
-            return View();
+            _transactionService.NewAdd();
+            return View(_transactionService.GetAllNewTransactions());
         }
     }
 }

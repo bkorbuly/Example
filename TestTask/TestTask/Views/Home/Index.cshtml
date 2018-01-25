@@ -1,4 +1,27 @@
-﻿@page
-@model IndexModel
-@{
-}
+﻿@model System.Collections.Generic.List<TestTask.Models.NewTransaction>
+<!Doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+       <title>Transactions</title>
+   </head>
+   <body>
+       <h1>Transactions</h1>
+       <table>
+           <tr>
+               <td>| Source |</td>
+               <td>  Destiny|</td>
+               <td> Amount |</td>
+           </tr>
+       </table>
+       <table>
+           @foreach (var NewTransaction in Model)
+           {
+               <tr>
+                   <td>| @NewTransaction.Source |</td>
+                   <td> @NewTransaction.Destiny |</td>
+                   <td> @NewTransaction.Amount |</td>
+               </tr>
+           }
+       </table>
+   </body>
+</html>

@@ -6,7 +6,7 @@ using TestTask.Interfaces;
 
 namespace TestTask.Models
 {
-    public class Transaction : ITransaction
+    public class NewTransaction : ITransaction
     {
         public int ID { get; set; }
         public string Source { get; set; }
