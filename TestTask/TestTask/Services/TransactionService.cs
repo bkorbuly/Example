@@ -39,7 +39,9 @@ namespace TestTask.Services
         {
             transactionList = _transactionRepository.GetAllTransactions();
             string[] rawinformation = new string[transactionList.Count() * 3];
+            List <NewTransaction> sumList= new List<NewTransaction>();
             int j = 0;
+            Dictionary<string, int> samepairs = new Dictionary<string, int>();
             for (int i = 0; i < transactionList.Count(); i++)
             {
                 rawinformation[j++] = transactionList[i].Source;
@@ -47,23 +49,42 @@ namespace TestTask.Services
                 rawinformation[j++] = transactionList[i].Amount;
             }
 
-            for (int i = 0; i < rawinformation.GetLength(0) - 3; i+=3)
+            for (int i= 0; i < rawinformation.GetLength(0) - 3; i += 3)
             {
-                for(int k = i; k <rawinformation.GetLongLength(0) - 3; k += 3)
+                for (int k = 0; k <rawinformation.GetLength(0); k += 3)
                 {
-                    if ((rawinformation[i] == rawinformation[k + 4]) && (rawinformation[i + 1] == rawinformation[k + 3]))
+                    if ((rawinformation[i] == rawinformation[k + 3]) && (rawinformation[i + 1] == rawinformation[k + 4]))
                     {
                         int AmountOne = int.Parse(rawinformation[i + 2]);
-                        int AmountTwo = int.Parse(rawinformation[i + 5]);
+                        int AmountTwo = int.Parse(rawinformation[k + 5]);
                         int netAmount = AmountOne + AmountTwo;
-                        if (Math.Abs(AmountOne) < Math.Abs(AmountTwo))
-                            newtransactions.Add(new NewTransaction() { Amount = netAmount.ToString(), Destiny = rawinformation[k + 2], Source = rawinformation[i] });
-                        else
-                            newtransactions.Add(new NewTransaction() { Amount = netAmount.ToString(), Destiny = rawinformation[i], Source = rawinformation[k + 2] });
-                    }
-                    else
-                        newtransactions.Add(new NewTransaction() { Amount = rawinformation[i + 2], Destiny = rawinformation[i + 1], Source = rawinformation[i] });
+                        sumList.Add(new NewTransaction { Source = rawinformation[i], Destiny = rawinformation[i + 1], Amount = netAmount.ToString() });
+                    }  
                 }
+            }
+
+            
+
+
+            for (int i = 0; i < rawinformation.GetLength(0) - 3; i+=3)
+            {
+                bool match = false;
+                for (int k = i; k <rawinformation.GetLongLength(0) - 3; k += 3)
+                {   
+                    if ((rawinformation[i] == rawinformation[k + 4]) && (rawinformation[i + 1] == rawinformation[k + 3]))
+                    {
+                        match = true;
+                        int AmountOne = int.Parse(rawinformation[i + 2]);
+                        int AmountTwo = int.Parse(rawinformation[k + 5]);
+                        int netAmount = Math.Abs(- AmountOne + AmountTwo);
+                        if (Math.Abs(AmountOne) < Math.Abs(AmountTwo))
+                            newtransactions.Add(new NewTransaction() { Source = rawinformation[i + 1], Destiny = rawinformation[i], Amount = netAmount.ToString() });
+                        else
+                            newtransactions.Add(new NewTransaction() { Source = rawinformation[i], Destiny = rawinformation[i + 1], Amount = netAmount.ToString() });
+                    }
+                }
+                if(!match)
+                    newtransactions.Add(new NewTransaction() { Amount = rawinformation[i + 2], Destiny = rawinformation[i + 1], Source = rawinformation[i] });
             }
             return newtransactions;
         }

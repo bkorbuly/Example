@@ -25,7 +25,7 @@ namespace TestTask.Controllers
             _transactionService.ReadFile();
             _transactionService.MatchTransactions();
             _transactionService.NewAdd();
-            return View(_transactionService.GetAllNewTransactions());
+            return Json(_transactionService.GetAllNewTransactions());
         }
     }
 }
