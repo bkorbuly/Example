@@ -8,7 +8,7 @@ namespace TestTask.Services
 {
     public class FileWatcher
     {
-        const string path = @"C:\Users\Balazs\Test\TestTask\proba\files";
+        static string path = @"C:\Users\Balazs\Test\TestTask\proba\files";
         public static void Watch()
         {
             FileSystemWatcher watcher = new FileSystemWatcher();

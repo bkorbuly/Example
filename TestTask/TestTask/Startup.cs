@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using TestTask.Repositories;
 using TestTask.Services;
+using TestTask.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestTask
 {
@@ -17,6 +19,8 @@ namespace TestTask
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            services.AddDbContext<TransactionContext>(options => options.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = tests; Integrated Security = True; Connect Timeout = 30;"));
             services.AddScoped<TransactionRepository>();
             services.AddScoped<TransactionService>();
         }
@@ -29,7 +33,7 @@ namespace TestTask
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseMvc();
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");

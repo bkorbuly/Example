@@ -7,6 +7,7 @@ namespace TestTask.Models
 {
     public class Transaction
     {
+        public int ID { get; set; }
         public string Source { get; set; }
         public string Destiny { get; set; }
         public string Amount { get; set; }
